@@ -2,18 +2,11 @@ package main
 
 import (
 	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
 )
 
-type InterfaceInfo struct {
-	ipResult string
-	nicType  string
-}
-
-func (i InterfaceInfo) MarshalLogObject(enc zapcore.ObjectEncoder) error {
-	enc.AddString("IpResult", i.ipResult)
-	enc.AddString("NicType", i.nicType)
-	return nil
+type Foo struct {
+	Name string
+	Age  int
 }
 
 func main() {
@@ -24,12 +17,9 @@ func main() {
 	}
 	defer logger.Sync()
 
-	result := InterfaceInfo{
-		ipResult: "foo",
-		nicType:  "bar",
-	}
+	f := Foo{"foo", 100}
 
 	logger.Info("This is an information message",
-		zap.Any("key", result),
+		zap.Any("key", f),
 	)
 }
